@@ -1,0 +1,55 @@
+# Week 01 Reflection
+
+1. Include a link to one of your Pull Requests (PRs) at GitHub. (It should be merged and closed at this point.)
+
+GitHub Pull Request Link:
+https://github.com/ViryUchay/cse341-books/pull/7
+
+2. Include a link to one of your Issues at GitHub. (It should be closed at this point.)
+
+GitHub Issue Link:
+https://github.com/ViryUchay/cse341-books/issues/4
+
+3. Which issue took more or less time than expected? Why?
+
+Answer:
+The MongoDB connection and Render deployment took more time than I expected. 
+My application worked locally, but I encountered difficulties when deploying it to Render. 
+I had to troubleshoot the database connection, check my environment variables, and review my deployment configuration. 
+This experience taught me the importance of testing applications in both local and production environments.
+
+4. Include a link to your walk-though video. (It must include your name, show your web service working at Render, explain the way your `Get Single Book` controller works, and discuss status codes.):
+
+Video link: 
+https://youtu.be/RGaFCEHNUlI
+
+5.a. Include a GitHub link to a file that shows how your app uses sensitive data, such as the MongoDB connection string.
+
+GitHub link:
+https://github.com/ViryUchay/cse341-books/blob/main/src/db/connect.js
+
+5.b. How did you store sensitive data? Why is that approach important?
+
+Answer:
+I stored sensitive information, such as my MongoDB connection string, in environment variables instead of writing it directly into my application code. 
+I used a .env file for local development and configured the environment variable in Render for deployment. 
+This approach helps protect database credentials and reduces the risk of unauthorized access.
+
+6.a. Include a GitHub link to a file that shows one other implementation decision you made.
+
+GitHub link:
+https://github.com/ViryUchay/cse341-books/blob/main/src/db/connect.js
+
+
+6.b. What decision does this file show, and why did you make that choice?
+
+Answer:
+I decided to separate the MongoDB connection logic into its own file rather than placing everything inside the server file. 
+I made this decision to improve code organization, make the database connection reusable, and simplify debugging and future maintenance.
+
+7. What is one specific habit or process you will work on for next week?
+
+Answer:
+Next week, I will improve my planning and testing habits by breaking my work into smaller tasks and testing each feature before moving to the next one. 
+I will also make regular Git commits and pay closer attention to error messages when debugging. 
+This will help me identify problems earlier and manage my development time more effectively.

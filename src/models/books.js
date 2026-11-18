@@ -1,21 +1,69 @@
+
 import { getDb } from '../db/connect.js';
-import { ObjectId } from 'mongodb';
+
+const getBooksCollection = () => getDb().collection('books');
+
+const formatBook = (book) => {
+  if (!book) return null;
+
+  return {
+    id: book.id,
+    authorId: book.authorId,
+    title: book.title,
+    publicationDate: book.publicationDate
+  };
+};
 
 export const getAllBooks = async () => {
-    const db = getDb();
-    const collection = db.collection('books');
-    const books = await collection.find().toArray();
-    return books;
+  const books = await getBooksCollection()
+    .find({})
+    .toArray();
+
+  return books.map(formatBook);
 };
 
 export const getBookById = async (bookId) => {
-    const db = getDb();
-    const collection = db.collection('books');
-    
-    // Automatically handles MongoDB ObjectId or custom id fields
-    if (ObjectId.isValid(bookId)) {
-        return await collection.findOne({ _id: new ObjectId(bookId) });
-    } else {
-        return await collection.findOne({ id: bookId });
-    }
+  const book = await getBooksCollection().findOne({
+    id: bookId
+  });
+
+  return formatBook(book);
+};
+
+export const createBook = async (bookData) => {
+  await getBooksCollection().insertOne(bookData);
+
+  return formatBook(bookData);
+};
+
+export const updateBook = async (bookId, bookData) => {
+  const collection = getBooksCollection();
+
+  await collection.updateOne(
+    { id: bookId },
+    { $set: bookData }
+  );
+
+  const updatedBook = await collection.findOne({
+    id: bookId
+  });
+
+  return formatBook(updatedBook);
+};
+
+export const deleteBook = async (bookId) => {
+  const result = await getBooksCollection().deleteOne({
+    id: bookId
+  });
+
+  return result.deletedCount === 1;
+};
+
+export const bookExists = async (bookId) => {
+  const book = await getBooksCollection().findOne(
+    { id: bookId },
+    { projection: { _id: 1 } }
+  );
+
+  return Boolean(book);
 };
